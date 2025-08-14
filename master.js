@@ -1,13 +1,28 @@
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
-const { Sticker, createSticker } = require("wa-sticker-formatter");
+const { Sticker } = require("wa-sticker-formatter");
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const math = require("mathjs");
+
+// Puppeteer patch for Railway
+const puppeteer = require("puppeteer");
 
 console.log("🚀 Starting Master Bot...");
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "Master" }),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--disable-extensions',
+            '--disable-infobars'
+        ],
+        executablePath: puppeteer.executablePath(), // Ensures correct Chromium path
+    }
 });
 
 client.on("qr", (qr) => {
