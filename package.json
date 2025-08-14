@@ -1,0 +1,15 @@
+{
+  "name": "master-bot",
+  "version": "1.0.0",
+  "main": "master.js",
+  "scripts": {
+    "start": "node master.js"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "^1.21.0",
+    "qrcode-terminal": "^0.12.0",
+    "wa-sticker-formatter": "^4.4.4",
+    "mathjs": "^11.8.0",
+    "node-fetch": "^3.3.2"
+  }
+}
