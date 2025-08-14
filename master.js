@@ -1,11 +1,11 @@
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
+const QRCode = require("qrcode");
 const { Sticker } = require("wa-sticker-formatter");
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const math = require("mathjs");
-
-// Puppeteer patch for Railway
 const puppeteer = require("puppeteer");
+const fs = require("fs");
 
 console.log("🚀 Starting Master Bot...");
 
@@ -21,13 +21,16 @@ const client = new Client({
             '--disable-extensions',
             '--disable-infobars'
         ],
-        executablePath: puppeteer.executablePath(), // Ensures correct Chromium path
+        executablePath: puppeteer.executablePath(),
     }
 });
 
-client.on("qr", (qr) => {
+// QR code event
+client.on("qr", async (qr) => {
     console.log("📱 Scan this QR code to connect Master Bot:");
     qrcode.generate(qr, { small: true });
+    await QRCode.toFile("qr.png", qr);
+    console.log("✅ QR code saved as qr.png — download it from Railway files to scan easily.");
 });
 
 client.on("ready", () => {
