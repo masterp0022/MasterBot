@@ -1,7 +1,7 @@
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const { Sticker, createSticker } = require("wa-sticker-formatter");
-const fetch = require("node-fetch");
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const math = require("mathjs");
 
 console.log("🚀 Starting Master Bot...");
